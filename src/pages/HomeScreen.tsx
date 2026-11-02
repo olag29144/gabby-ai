@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Lightbulb, Code2, FileText, Sparkles } from 'lucide-react';
 import { Composer } from '@/components/composer/Composer';
+import { NovaLogo } from '@/assets/NovaLogo';
 import type { Attachment } from '@/types';
 
 interface HomeScreenProps {
@@ -33,7 +34,12 @@ export function HomeScreen({ onSend, isLoading, selectedModel, onModelChange }: 
         aria-hidden="true"
       />
 
-      <div className="relative flex flex-col items-center justify-center flex-1 px-4 pb-8 min-h-0">
+      <div className="relative flex flex-col items-center justify-center flex-1 px-4 pb-8 min-h-0 pt-12">
+        {/* Gemini Sparkle Logo */}
+        <div className="mb-4 hover:scale-105 transition-transform">
+          <NovaLogo size={46} />
+        </div>
+
         {/* Heading */}
         <h1 className="text-4xl md:text-5xl font-normal text-[var(--text-primary)] text-center mb-8 tracking-tight select-none">
           Where should we start?

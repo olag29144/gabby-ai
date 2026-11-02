@@ -1,0 +1,7 @@
+{
+  "name": "Nova AI",
+  "description": "Intelligent Gemini-inspired assistant with multimodality, voice input, and fast responses.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

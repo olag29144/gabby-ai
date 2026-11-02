@@ -32,5 +32,9 @@ export function useTheme() {
     await savePreferences(updated);
   };
 
-  return { theme, setTheme };
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  return { theme, setTheme, toggleTheme };
 }

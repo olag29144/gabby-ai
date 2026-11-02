@@ -59,7 +59,7 @@ export function ChatView({ conversationId, pendingMessage, onPendingConsumed }: 
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 scroll-smooth">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden pt-16 pb-6 scroll-smooth">
         {conversation.messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-[var(--text-muted)] text-sm">Send a message to continue</p>

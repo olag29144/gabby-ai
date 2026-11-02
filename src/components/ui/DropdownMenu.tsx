@@ -7,10 +7,11 @@ interface DropdownMenuProps {
   trigger: ReactNode;
   children: ReactNode;
   align?: 'left' | 'right';
+  placement?: 'top' | 'bottom';
   className?: string;
 }
 
-export function DropdownMenu({ open, onClose, trigger, children, align = 'left', className }: DropdownMenuProps) {
+export function DropdownMenu({ open, onClose, trigger, children, align = 'left', placement = 'bottom', className }: DropdownMenuProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +37,8 @@ export function DropdownMenu({ open, onClose, trigger, children, align = 'left',
       {open && (
         <div
           className={cn(
-            'absolute z-50 top-full mt-1 min-w-[180px]',
+            'absolute z-50 min-w-[200px]',
+            placement === 'top' ? 'bottom-full mb-2' : 'top-full mt-1',
             'bg-[var(--surface-raised)] border border-[var(--border)] rounded-xl shadow-2xl',
             'py-1 animate-fade-in',
             align === 'right' ? 'right-0' : 'left-0',

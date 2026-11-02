@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Copy, Check, RefreshCw, ThumbsUp, ThumbsDown, AlertCircle, FileText } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Copy, Check, RefreshCw, ThumbsUp, ThumbsDown, AlertCircle, FileText, Play, Pause } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeSanitize from 'rehype-sanitize';
@@ -7,7 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { cn } from '@/lib/utils';
 import { Tooltip } from '@/components/ui/Tooltip';
-import type { Message } from '@/types';
+import type { Message, Attachment } from '@/types';
 
 interface MessageBubbleProps {
   message: Message;
@@ -64,6 +64,8 @@ export function MessageBubble({ message, isLast, onRetry }: MessageBubbleProps) 
                     alt={att.name}
                     className="max-h-48 max-w-xs object-contain bg-[var(--surface-overlay)]"
                   />
+                ) : (att.type.startsWith('audio/') || att.mimeType?.startsWith('audio/')) && att.dataUrl ? (
+                  <AudioMessageAttachment attachment={att} />
                 ) : (
                   <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface-overlay)]">
                     <FileText size={14} className="text-[var(--accent)] shrink-0" />
@@ -235,6 +237,43 @@ function CodeBlock({ lang, code }: { lang: string; code: string }) {
         >
           {code}
         </SyntaxHighlighter>
+      </div>
+    </div>
+  );
+}
+
+function AudioMessageAttachment({ attachment }: { attachment: Attachment }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const toggle = () => {
+    if (!audioRef.current && attachment.dataUrl) {
+      audioRef.current = new Audio(attachment.dataUrl);
+      audioRef.current.onended = () => setIsPlaying(false);
+    }
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-2.5 px-3 py-2 bg-[var(--surface-overlay)] min-w-[190px]">
+      <button
+        onClick={toggle}
+        className="w-7 h-7 rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30 flex items-center justify-center shrink-0 transition-colors"
+        title={isPlaying ? 'Pause' : 'Play voice note'}
+      >
+        {isPlaying ? <Pause size={12} fill="currentColor" /> : <Play size={12} fill="currentColor" />}
+      </button>
+      <div className="min-w-0 flex-1">
+        <p className="text-xs font-medium text-[var(--text-primary)] truncate">{attachment.name}</p>
+        <span className="text-[10px] text-[var(--text-muted)]">Voice note</span>
       </div>
     </div>
   );

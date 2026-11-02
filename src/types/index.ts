@@ -9,6 +9,7 @@ export interface Attachment {
   size: number;
   dataUrl?: string;
   mimeType: string;
+  duration?: number;
 }
 
 export interface Message {
@@ -27,6 +28,7 @@ export interface Conversation {
   messages: Message[];
   model: string;
   pinned: boolean;
+  isNotebook?: boolean;
   createdAt: number;
   updatedAt: number;
 }
@@ -48,6 +50,28 @@ export interface Model {
 }
 
 export const AVAILABLE_MODELS: Model[] = [
+  // ── Gemini Direct (Google AI) ──────────────────────────
+  {
+    id: 'gemini-2.0-flash',
+    name: 'Gemini 2.0 Flash',
+    description: 'High speed, multimodal, reasoning · Google',
+    available: true,
+    provider: 'gemini-direct',
+  },
+  {
+    id: 'gemini-1.5-flash',
+    name: 'Gemini 1.5 Flash',
+    description: 'Fast & versatile · Google',
+    available: true,
+    provider: 'gemini-direct',
+  },
+  {
+    id: 'gemini-1.5-pro',
+    name: 'Gemini 1.5 Pro',
+    description: 'Complex reasoning & analysis · Google',
+    available: true,
+    provider: 'gemini-direct',
+  },
   // ── Groq (confirmed working — ultra-fast) ─────────────
   {
     id: 'groq/qwen/qwen3.8-27b',
@@ -67,6 +91,13 @@ export const AVAILABLE_MODELS: Model[] = [
     id: 'groq/openai/gpt-oss-120b',
     name: 'GPT-OSS 120B',
     description: 'Powerful · OpenAI OSS · Groq',
+    available: true,
+    provider: 'groq',
+  },
+  {
+    id: 'groq/llama-3.3-70b-versatile',
+    name: 'Llama 3.3 70B',
+    description: 'Llama 3.3 Versatile · Groq',
     available: true,
     provider: 'groq',
   },
@@ -108,4 +139,4 @@ export const AVAILABLE_MODELS: Model[] = [
   },
 ];
 
-export const DEFAULT_MODEL = 'groq/qwen/qwen3.8-27b';
+export const DEFAULT_MODEL = 'gemini-2.0-flash';

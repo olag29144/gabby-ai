@@ -31,20 +31,44 @@ export function useConversations() {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
-    await saveConversation(conv);
+    if (!state.isTemporaryChat) {
+      await saveConversation(conv);
+    }
     dispatch({ type: 'ADD_CONVERSATION', payload: conv });
     return conv;
-  }, [state.preferences.defaultModel, dispatch]);
+  }, [state.preferences.defaultModel, state.isTemporaryChat, dispatch]);
+
+  const createNotebook = useCallback(async (title = 'Untitled notebook'): Promise<Conversation> => {
+    const conv: Conversation = {
+      id: generateId(),
+      title,
+      messages: [],
+      model: state.preferences.defaultModel || DEFAULT_MODEL,
+      pinned: false,
+      isNotebook: true,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    if (!state.isTemporaryChat) {
+      await saveConversation(conv);
+    }
+    dispatch({ type: 'ADD_CONVERSATION', payload: conv });
+    return conv;
+  }, [state.preferences.defaultModel, state.isTemporaryChat, dispatch]);
 
   const updateConversation = useCallback(async (conv: Conversation) => {
     const updated = { ...conv, updatedAt: Date.now() };
-    await saveConversation(updated);
+    if (!state.isTemporaryChat) {
+      await saveConversation(updated);
+    }
     dispatch({ type: 'UPDATE_CONVERSATION', payload: updated });
-  }, [dispatch]);
+  }, [state.isTemporaryChat, dispatch]);
 
   const addMessage = useCallback(async (convId: string, message: Message) => {
-    // Always read from DB to avoid stale state during streaming
-    const conv = await getConversation(convId);
+    // Read from DB or ref
+    const conv = state.isTemporaryChat
+      ? conversationsRef.current.find(c => c.id === convId)
+      : (await getConversation(convId)) ?? conversationsRef.current.find(c => c.id === convId);
     if (!conv) return;
     const updated: Conversation = {
       ...conv,
@@ -54,9 +78,11 @@ export function useConversations() {
     if (conv.messages.length === 0 && message.role === 'user') {
       updated.title = generateTitle(message.content);
     }
-    await saveConversation(updated);
+    if (!state.isTemporaryChat) {
+      await saveConversation(updated);
+    }
     dispatch({ type: 'UPDATE_CONVERSATION', payload: updated });
-  }, [dispatch]);
+  }, [state.isTemporaryChat, dispatch]);
 
   // updateMessage reads from DB to avoid stale-closure issues during streaming
   const updateMessage = useCallback(async (
@@ -64,7 +90,9 @@ export function useConversations() {
     messageId: string,
     updates: Partial<Message>,
   ) => {
-    const conv = await getConversation(convId);
+    const conv = state.isTemporaryChat
+      ? conversationsRef.current.find(c => c.id === convId)
+      : (await getConversation(convId)) ?? conversationsRef.current.find(c => c.id === convId);
     if (!conv) return;
     const updated: Conversation = {
       ...conv,
@@ -73,9 +101,11 @@ export function useConversations() {
       ),
       updatedAt: Date.now(),
     };
-    await saveConversation(updated);
+    if (!state.isTemporaryChat) {
+      await saveConversation(updated);
+    }
     dispatch({ type: 'UPDATE_CONVERSATION', payload: updated });
-  }, [dispatch]);
+  }, [state.isTemporaryChat, dispatch]);
 
   const renameConversation = useCallback(async (id: string, title: string) => {
     const conv = await getConversation(id);
@@ -112,6 +142,7 @@ export function useConversations() {
     activeConversation,
     activeConversationId: state.activeConversationId,
     createConversation,
+    createNotebook,
     updateConversation,
     addMessage,
     updateMessage,

@@ -60,8 +60,8 @@ export function useChat(conversationId: string | null) {
     setIsStreaming(true);
     abortRef.current = new AbortController();
 
-    // Read fresh conversation from DB for accurate history
-    const freshConv = await getConversation(activeConvId);
+    // Read fresh conversation from DB for accurate history, fallback to in-memory conversations for temporary chat
+    const freshConv = (await getConversation(activeConvId)) ?? conversations.find(c => c.id === activeConvId);
     const historyForApi = (freshConv?.messages ?? []).filter(
       m => m.status === 'done' && m.role !== undefined
     );

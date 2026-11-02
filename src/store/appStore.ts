@@ -9,6 +9,7 @@ export interface AppState {
   sidebarOpen: boolean;
   searchQuery: string;
   isLoading: boolean;
+  isTemporaryChat: boolean;
 }
 
 export type AppAction =
@@ -23,16 +24,20 @@ export type AppAction =
   | { type: 'TOGGLE_SIDEBAR' }
   | { type: 'SET_SIDEBAR'; payload: boolean }
   | { type: 'SET_SEARCH'; payload: string }
-  | { type: 'SET_LOADING'; payload: boolean };
+  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'TOGGLE_TEMPORARY_CHAT' }
+  | { type: 'SET_TEMPORARY_CHAT'; payload: boolean };
 
 export const initialState: AppState = {
   conversations: [],
   activeConversationId: null,
-  preferences: { theme: 'dark', defaultModel: DEFAULT_MODEL, sidebarOpen: true },
-  sidebarOpen: true,
+  preferences: { theme: 'dark', defaultModel: DEFAULT_MODEL, sidebarOpen: false },
+  sidebarOpen: false,
   searchQuery: '',
   isLoading: true,
+  isTemporaryChat: false,
 };
+
 
 export function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
@@ -70,6 +75,10 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       return { ...state, searchQuery: action.payload };
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload };
+    case 'TOGGLE_TEMPORARY_CHAT':
+      return { ...state, isTemporaryChat: !state.isTemporaryChat };
+    case 'SET_TEMPORARY_CHAT':
+      return { ...state, isTemporaryChat: action.payload };
     default:
       return state;
   }
