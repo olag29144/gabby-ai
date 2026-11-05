@@ -262,11 +262,19 @@ async function* readSSE(response: Response): AsyncGenerator<string> {
         if (data === '[DONE]') return;
         try {
           const parsed = JSON.parse(data) as {
-            choices?: Array<{ delta?: { content?: string } }>;
+            choices?: Array<{
+              delta?: {
+                content?: string | null;
+                reasoning?: string | null;
+              };
+            }>;
             error?: { message?: string };
           };
           if (parsed.error?.message) throw new Error(parsed.error.message);
-          const text = parsed.choices?.[0]?.delta?.content;
+          // Prefer content, fall back to reasoning text for reasoning models
+          const text = parsed.choices?.[0]?.delta?.content
+            ?? parsed.choices?.[0]?.delta?.reasoning
+            ?? null;
           if (text) yield text;
         } catch (e: unknown) {
           if (e instanceof Error && e.name !== 'SyntaxError') throw e;

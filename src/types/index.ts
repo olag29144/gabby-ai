@@ -50,33 +50,11 @@ export interface Model {
 }
 
 export const AVAILABLE_MODELS: Model[] = [
-  // ── Gemini Direct (Google AI) ──────────────────────────
-  {
-    id: 'gemini-2.0-flash',
-    name: 'Gemini 2.0 Flash',
-    description: 'High speed, multimodal, reasoning · Google',
-    available: true,
-    provider: 'gemini-direct',
-  },
-  {
-    id: 'gemini-1.5-flash',
-    name: 'Gemini 1.5 Flash',
-    description: 'Fast & versatile · Google',
-    available: true,
-    provider: 'gemini-direct',
-  },
-  {
-    id: 'gemini-1.5-pro',
-    name: 'Gemini 1.5 Pro',
-    description: 'Complex reasoning & analysis · Google',
-    available: true,
-    provider: 'gemini-direct',
-  },
-  // ── Groq (confirmed working — ultra-fast) ─────────────
+  // ── Groq (confirmed working — ultra-fast) ────────────
   {
     id: 'groq/qwen/qwen3.8-27b',
     name: 'Qwen3 27B',
-    description: 'Smart & fast · Groq',
+    description: 'Fast & smart · Groq',
     available: true,
     provider: 'groq',
   },
@@ -94,24 +72,25 @@ export const AVAILABLE_MODELS: Model[] = [
     available: true,
     provider: 'groq',
   },
+  // ── OpenRouter free (confirmed available) ────────────
   {
-    id: 'groq/llama-3.3-70b-versatile',
-    name: 'Llama 3.3 70B',
-    description: 'Llama 3.3 Versatile · Groq',
-    available: true,
-    provider: 'groq',
-  },
-  // ── OpenRouter (requires credits for most models) ─────
-  {
-    id: 'google/gemini-2.0-flash-exp:free',
-    name: 'Gemini 2.0 Flash',
-    description: 'Google · OpenRouter',
+    id: 'nvidia/nemotron-3.5-lightning:free',
+    name: 'Nemotron Lightning',
+    description: 'Free · NVIDIA · OpenRouter',
     available: true,
     provider: 'openrouter',
   },
   {
-    id: 'google/gemini-1.5-flash',
-    name: 'Gemini 1.5 Flash',
+    id: 'google/gemma-4-31b-it:free',
+    name: 'Gemma 4 31B',
+    description: 'Free · Google · OpenRouter',
+    available: true,
+    provider: 'openrouter',
+  },
+  // ── OpenRouter paid ────────────────────────────────────
+  {
+    id: 'google/gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash',
     description: 'Google · OpenRouter',
     available: true,
     provider: 'openrouter',
@@ -130,13 +109,6 @@ export const AVAILABLE_MODELS: Model[] = [
     available: true,
     provider: 'openrouter',
   },
-  {
-    id: 'meta-llama/llama-3.1-8b-instruct:free',
-    name: 'Llama 3.1 8B',
-    description: 'Free · Meta · OpenRouter',
-    available: true,
-    provider: 'openrouter',
-  },
 ];
 
-export const DEFAULT_MODEL = 'gemini-2.0-flash';
+export const DEFAULT_MODEL = 'groq/qwen/qwen3.8-27b';
