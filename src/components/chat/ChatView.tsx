@@ -101,7 +101,7 @@ export function ChatView({ conversationId, pendingMessage, onPendingConsumed }: 
           variant="chat"
         />
         <p className="text-center text-[10px] text-[var(--text-muted)] mt-2">
-          Nova AI can make mistakes. Consider checking important information.
+          Gabby AI can make mistakes. Consider checking important information.
         </p>
       </div>
     </div>

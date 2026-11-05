@@ -67,7 +67,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`\nNova AI server running on http://0.0.0.0:${PORT}`);
+    console.log(`\nGabby AI server running on http://0.0.0.0:${PORT}`);
     if (keyManager.count === 0) {
       console.warn('⚠  No API keys configured. Set GEMINI_API_KEY, GROQ_API_KEYS, or OPENROUTER_API_KEYS in .env\n');
     } else {

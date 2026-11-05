@@ -7,7 +7,7 @@ class NovaDB extends Dexie {
   preferences!: Table<UserPreferences & { id: string }>;
 
   constructor() {
-    super('nova-ai-db');
+    super('gabby-ai-db');
     this.version(1).stores({
       conversations: 'id, title, createdAt, updatedAt, pinned',
       preferences: 'id',

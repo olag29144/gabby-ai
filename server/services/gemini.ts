@@ -311,7 +311,7 @@ async function* tryKey(
     case 'openrouter':
       yield* streamOAI(OPENROUTER_BASE, entry.key, model, messages, {
         'HTTP-Referer': 'http://localhost:3000',
-        'X-Title': 'Nova AI',
+        'X-Title': 'Gabby AI',
       });
       break;
     case 'groq':

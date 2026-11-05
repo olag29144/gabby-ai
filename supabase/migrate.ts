@@ -46,7 +46,7 @@ const pool = new pg.Pool({
 
 const schemaSQL = readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
 
-console.log('\n🚀  Nova AI — Running Supabase schema migration');
+console.log('\n🚀  Gabby AI — Running Supabase schema migration');
 console.log(`    Project: ${PROJECT_REF}`);
 console.log(`    Connecting...\n`);
 
@@ -82,7 +82,7 @@ try {
     WHERE schemaname = 'public' AND rowsecurity = true
   `);
   console.log(`\nRLS enabled on ${rlsRows.length} table(s)`);
-  console.log('\n✅  Migration complete! Nova AI is ready.\n');
+  console.log('\n✅  Migration complete! Gabby AI is ready.\n');
 
 } catch (err: unknown) {
   const msg = err instanceof Error ? err.message : String(err);

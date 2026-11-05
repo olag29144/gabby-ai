@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer, useRef } from 'react';
-import { NovaLogo } from '@/assets/NovaLogo';
+import { GabbyLogo } from '@/assets/GabbyLogo';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { HomeScreen } from '@/pages/HomeScreen';
 import { ChatView } from '@/components/chat/ChatView';
@@ -153,7 +153,7 @@ function Shell() {
           className="md:hidden absolute top-3 left-3 z-50 w-10 h-10 rounded-full bg-[var(--surface-raised)] hover:bg-[var(--surface-hover)] border border-[var(--border)] shadow-md backdrop-blur-md active:scale-95 transition-all flex items-center justify-center group cursor-pointer"
           aria-label="Open sidebar"
         >
-          <NovaLogo size={24} />
+          <GabbyLogo size={24} />
         </button>
 
         {/* Floating 4 top-right buttons (no navbar bar, only the buttons) */}

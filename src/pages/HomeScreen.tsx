@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Lightbulb, Code2, FileText, Sparkles } from 'lucide-react';
 import { Composer } from '@/components/composer/Composer';
-import { NovaLogo } from '@/assets/NovaLogo';
+import { GabbyLogo } from '@/assets/GabbyLogo';
 import type { Attachment } from '@/types';
 
 interface HomeScreenProps {
@@ -37,7 +37,7 @@ export function HomeScreen({ onSend, isLoading, selectedModel, onModelChange }: 
       <div className="relative flex flex-col items-center justify-center flex-1 px-4 pb-8 min-h-0 pt-12">
         {/* Gemini Sparkle Logo */}
         <div className="mb-4 hover:scale-105 transition-transform">
-          <NovaLogo size={46} />
+          <GabbyLogo size={46} />
         </div>
 
         {/* Heading */}
@@ -54,7 +54,7 @@ export function HomeScreen({ onSend, isLoading, selectedModel, onModelChange }: 
             onModelChange={onModelChange}
             initialValue={pendingPrompt}
             onInitialValueConsumed={() => setPendingPrompt('')}
-            placeholder="Ask Nova anything..."
+            placeholder="Ask Gabby anything..."
             variant="home"
           />
         </div>

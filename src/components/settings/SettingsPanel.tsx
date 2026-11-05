@@ -153,7 +153,7 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
           <div className="pt-2 border-t border-[var(--border)]">
             <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
               <Info size={12} />
-              <span>Nova AI v1.0 · Powered by Google Gemini</span>
+              <span>Gabby AI v1.0 · Powered by Google Gemini</span>
             </div>
           </div>
         </div>

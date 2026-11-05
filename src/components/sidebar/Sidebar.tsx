@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/Button';
 import { DropdownMenu, DropdownItem, DropdownSeparator } from '@/components/ui/DropdownMenu';
 import { Dialog } from '@/components/ui/Dialog';
 import { Tooltip } from '@/components/ui/Tooltip';
-import { NovaLogo } from '@/assets/NovaLogo';
+import { GabbyLogo } from '@/assets/GabbyLogo';
 
 interface SidebarProps {
   onNewChat: () => void;
@@ -161,7 +161,7 @@ export function Sidebar({ onNewChat, onOpenSettings, onSelectPrompt, onClose, fo
                 className="p-1 rounded-xl hover:bg-white/10 dark:hover:bg-white/10 transition-all hover:scale-110 active:scale-95 group focus-visible:outline-none cursor-pointer"
                 aria-label="Open sidebar"
               >
-                <NovaLogo size={28} />
+                <GabbyLogo size={28} />
               </button>
             </Tooltip>
 
@@ -283,9 +283,9 @@ export function Sidebar({ onNewChat, onOpenSettings, onSelectPrompt, onClose, fo
           <div className="flex items-center justify-between px-4 h-14 shrink-0">
             {/* Logo + "Gemini" text */}
             <div className="flex items-center gap-2.5">
-              <NovaLogo size={24} />
+              <GabbyLogo size={24} />
               <span className="text-[17px] font-semibold text-[var(--text-primary)] tracking-tight">
-                Gemini
+                Gabby AI
               </span>
             </div>
 

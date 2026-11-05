@@ -1,5 +1,5 @@
 -- ============================================================
--- Nova AI — Supabase Schema
+-- Gabby AI — Supabase Schema
 -- ============================================================
 -- Run this in Supabase SQL Editor or via the API.
 -- Uses Supabase Auth (auth.users) as the identity source.

@@ -172,7 +172,7 @@ export function TopHeader() {
       <Dialog
         open={getAppOpen}
         onClose={() => setGetAppOpen(false)}
-        title="Get Nova AI App"
+        title="Get Gabby AI App"
       >
         <div className="space-y-4 text-sm text-[var(--text-secondary)]">
           <p>
@@ -191,7 +191,7 @@ export function TopHeader() {
                 size="sm"
                 className="w-full text-xs"
                 onClick={() => {
-                  alert('To install Nova AI: Click the Install icon in your browser URL bar, or choose "Install Nova AI" in your browser menu.');
+                  alert('To install Gabby AI: Click the Install icon in your browser URL bar, or choose "Install Gabby AI" in your browser menu.');
                   setGetAppOpen(false);
                 }}
               >
@@ -223,7 +223,7 @@ export function TopHeader() {
       <Dialog
         open={upgradeOpen}
         onClose={() => setUpgradeOpen(false)}
-        title="Upgrade to Nova AI Pro"
+        title="Upgrade to Gabby AI Pro"
       >
         <div className="space-y-4 text-sm text-[var(--text-secondary)]">
           <p>
@@ -232,7 +232,7 @@ export function TopHeader() {
 
           <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-500/5 space-y-2.5">
             <div className="flex items-baseline justify-between">
-              <span className="font-bold text-base text-[var(--text-primary)]">Nova Pro Plan</span>
+              <span className="font-bold text-base text-[var(--text-primary)]">Gabby AI Pro Plan</span>
               <span className="text-sm font-semibold text-blue-400">$20 / month</span>
             </div>
             <ul className="text-xs space-y-1.5 text-[var(--text-primary)] pt-1">
@@ -251,7 +251,7 @@ export function TopHeader() {
             <Button
               className="bg-blue-600 hover:bg-blue-500 text-white"
               onClick={() => {
-                alert('Thank you for choosing Nova AI Pro! Pro capabilities are active for your account.');
+                alert('Thank you for choosing Gabby AI Pro! Pro capabilities are active for your account.');
                 setUpgradeOpen(false);
               }}
             >

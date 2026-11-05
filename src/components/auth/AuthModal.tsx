@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff, Loader2, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { NovaLogo } from '@/assets/NovaLogo';
+import { GabbyLogo } from '@/assets/GabbyLogo';
 import { signIn, signUp } from '@/lib/authApi';
 import { useAuth } from '@/store/authStore';
 import { getMe } from '@/lib/authApi';
@@ -58,8 +58,8 @@ export function AuthModal({ onClose }: AuthModalProps) {
         <div className="px-8 pt-8 pb-6">
           {/* Logo */}
           <div className="flex flex-col items-center mb-6">
-            <NovaLogo size={40} />
-            <h1 className="mt-3 text-xl font-semibold text-[var(--text-primary)]">Nova AI</h1>
+            <GabbyLogo size={40} />
+            <h1 className="mt-3 text-xl font-semibold text-[var(--text-primary)]">Gabby AI</h1>
             <p className="text-sm text-[var(--text-muted)] mt-1">
               {mode === 'signin' ? 'Sign in to your account' : 'Create an account'}
             </p>
