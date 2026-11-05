@@ -5,6 +5,8 @@ import { HomeScreen } from '@/pages/HomeScreen';
 import { ChatView } from '@/components/chat/ChatView';
 import { SettingsPanel } from '@/components/settings/SettingsPanel';
 import { TopHeader } from '@/components/layout/TopHeader';
+import { AuthProvider } from '@/components/auth/AuthProvider';
+import { AuthModal } from '@/components/auth/AuthModal';
 import { AppContext, appReducer, initialState, useApp } from '@/store/appStore';
 import { getAllConversations, getPreferences } from '@/lib/db';
 import type { Attachment } from '@/types';
@@ -34,17 +36,20 @@ export function AppLayout() {
   }, []);
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
-      <Shell />
-    </AppContext.Provider>
+    <AuthProvider>
+      <AppContext.Provider value={{ state, dispatch }}>
+        <Shell />
+      </AppContext.Provider>
+    </AuthProvider>
   );
 }
 
 function Shell() {
   const { state, dispatch } = useApp();
-  useTheme(); // Apply theme changes reactively
+  useTheme();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const { createConversation } = useConversations();
   const pendingChatRef = useRef<{ content: string; attachments: Attachment[] } | null>(null);
 
@@ -174,6 +179,7 @@ function Shell() {
       </div>
 
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
     </div>
   );
 }

@@ -5,6 +5,8 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { chatRouter } from './server/routes/chat.js';
+import { authRouter } from './server/routes/auth.js';
+import { conversationsRouter } from './server/routes/conversations.js';
 import { keyManager } from './server/services/keyManager.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,6 +29,8 @@ app.get('/api/health', (_req, res) => {
 
 // API routes
 app.use('/api', chatRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/conversations', conversationsRouter);
 
 async function startServer() {
   const isProd = process.env.NODE_ENV === 'production';

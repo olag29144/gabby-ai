@@ -7,6 +7,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useApp } from '@/store/appStore';
 import { useConversations } from '@/hooks/useConversations';
+import { useAuth } from '@/store/authStore';
 import { Button } from '@/components/ui/Button';
 import { DropdownMenu, DropdownItem, DropdownSeparator } from '@/components/ui/DropdownMenu';
 import { Dialog } from '@/components/ui/Dialog';
@@ -70,6 +71,7 @@ function GeminiSidebarToggleIcon({ size = 18, className = '' }: { size?: number;
 
 export function Sidebar({ onNewChat, onOpenSettings, onSelectPrompt, onClose, forceCollapsed, forceExpanded }: SidebarProps) {
   const { state, dispatch } = useApp();
+  const { state: authState } = useAuth();
   const {
     conversations,
     activeConversationId,
@@ -245,13 +247,15 @@ export function Sidebar({ onNewChat, onOpenSettings, onSelectPrompt, onClose, fo
               </button>
             </Tooltip>
 
-            <Tooltip content="Profile (Guest)" side="right">
+            <Tooltip content={authState.user ? (authState.user.displayName ?? authState.user.email) : 'Profile (Guest)'} side="right">
               <button
                 onClick={onOpenSettings}
-                className="w-8 h-8 rounded-full bg-[#d9381e] text-white flex items-center justify-center text-xs font-bold shadow-sm hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+                className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white flex items-center justify-center text-xs font-bold shadow-sm hover:opacity-90 active:scale-95 transition-all cursor-pointer"
                 aria-label="Profile"
               >
-                V
+                {authState.user
+                  ? (authState.user.displayName ?? authState.user.email).charAt(0).toUpperCase()
+                  : 'G'}
               </button>
             </Tooltip>
           </div>
@@ -584,10 +588,17 @@ export function Sidebar({ onNewChat, onOpenSettings, onSelectPrompt, onClose, fo
               <span>Settings</span>
             </button>
             <div className="flex items-center gap-2.5 px-2 py-1.5 mt-0.5">
-              <div className="w-6 h-6 rounded-full bg-[#c0392b] flex items-center justify-center text-white text-[11px] font-bold shrink-0 shadow-sm">
-                V
+              <div className={cn(
+                'w-6 h-6 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0 shadow-sm',
+                authState.user ? 'bg-gradient-to-br from-blue-500 to-purple-500' : 'bg-[#c0392b]'
+              )}>
+                {authState.user
+                  ? (authState.user.displayName ?? authState.user.email).charAt(0).toUpperCase()
+                  : 'G'}
               </div>
-              <span className="text-xs text-[var(--text-secondary)] truncate">Guest User</span>
+              <span className="text-xs text-[var(--text-secondary)] truncate">
+                {authState.user ? (authState.user.displayName ?? authState.user.email) : 'Guest User'}
+              </span>
             </div>
           </div>
         </div>

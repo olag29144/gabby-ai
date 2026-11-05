@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import { Download, Sparkles, Sun, Moon } from 'lucide-react';
+import { Download, Sparkles, Sun, Moon, LogIn, LogOut, User } from 'lucide-react';
 import { useApp } from '@/store/appStore';
 import { useTheme } from '@/hooks/useTheme';
+import { useAuth } from '@/store/authStore';
+import { signOut } from '@/lib/authApi';
 import { Tooltip } from '@/components/ui/Tooltip';
 import { Dialog } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
+import { AuthModal } from '@/components/auth/AuthModal';
+import { DropdownMenu, DropdownItem, DropdownSeparator } from '@/components/ui/DropdownMenu';
 
 /**
  * Temporary Chat icon matching Image 2:
@@ -33,10 +37,20 @@ function TemporaryChatIcon({ size = 18, className = '' }: { size?: number; class
 export function TopHeader() {
   const { state, dispatch } = useApp();
   const { theme, toggleTheme } = useTheme();
+  const { state: authState, dispatch: authDispatch } = useAuth();
   const [getAppOpen, setGetAppOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const isTemporary = state.isTemporaryChat;
+  const user = authState.user;
+
+  const handleSignOut = async () => {
+    await signOut();
+    authDispatch({ type: 'SIGN_OUT' });
+    setUserMenuOpen(false);
+  };
 
   return (
     <>
@@ -95,6 +109,47 @@ export function TopHeader() {
             {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
         </Tooltip>
+
+        {/* 5. User account button */}
+        {user ? (
+          <DropdownMenu
+            open={userMenuOpen}
+            onClose={() => setUserMenuOpen(false)}
+            align="right"
+            trigger={
+              <button
+                onClick={() => setUserMenuOpen(o => !o)}
+                className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-semibold shadow-sm transition-all active:scale-95 hover:opacity-90"
+                aria-label="Account menu"
+              >
+                {(user.displayName ?? user.email).charAt(0).toUpperCase()}
+              </button>
+            }
+          >
+            <div className="px-4 py-2.5 border-b border-[var(--border)]">
+              <p className="text-xs font-medium text-[var(--text-primary)] truncate">{user.displayName ?? 'Account'}</p>
+              <p className="text-[10px] text-[var(--text-muted)] truncate">{user.email}</p>
+            </div>
+            <DropdownItem icon={<User size={13} />} onClick={() => setUserMenuOpen(false)}>
+              Profile
+            </DropdownItem>
+            <DropdownSeparator />
+            <DropdownItem icon={<LogOut size={13} />} danger onClick={handleSignOut}>
+              Sign out
+            </DropdownItem>
+          </DropdownMenu>
+        ) : (
+          <Tooltip content="Sign in" side="bottom">
+            <button
+              onClick={() => setAuthOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--surface-raised)]/70 hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all active:scale-95 backdrop-blur-md"
+              aria-label="Sign in"
+            >
+              <LogIn size={13} />
+              <span className="hidden sm:inline">Sign in</span>
+            </button>
+          </Tooltip>
+        )}
       </div>
 
       {/* Temporary chat mobile alert badge */}
@@ -205,6 +260,8 @@ export function TopHeader() {
           </div>
         </div>
       </Dialog>
+      {/* Auth Modal */}
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
     </>
   );
 }
