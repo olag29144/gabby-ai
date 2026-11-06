@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string;
   displayName?: string;
   avatarUrl?: string;
+  role?: string;
 }
 
 export interface Session {
@@ -13,7 +14,7 @@ export interface Session {
   expiresAt: number;
 }
 
-const SESSION_KEY = 'nova_session';
+const SESSION_KEY = 'gabby_session';
 
 export function getStoredSession(): Session | null {
   try {
@@ -164,4 +165,59 @@ export async function cloudSavePreferences(prefs: {
     body: JSON.stringify(prefs),
   });
   return res.ok;
+}
+
+// ── Memory API ────────────────────────────────────────────────────────────────
+
+export interface Memory {
+  id: string;
+  userId: string;
+  content: string;
+  category: string;
+  importance: number;
+  isSystem: boolean;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export async function getMemories(): Promise<Memory[]> {
+  const res = await apiFetch('/memory');
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export async function createMemory(content: string, category = 'general', importance = 1) {
+  const res = await apiFetch('/memory', {
+    method: 'POST',
+    body: JSON.stringify({ content, category, importance }),
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+export async function updateMemory(id: string, updates: { content?: string; category?: string; importance?: number }) {
+  const res = await apiFetch(`/memory/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(updates),
+  });
+  return res.ok;
+}
+
+export async function deleteMemory(id: string) {
+  const res = await apiFetch(`/memory/${id}`, { method: 'DELETE' });
+  return res.ok;
+}
+
+// ── Developer API ─────────────────────────────────────────────────────────────
+
+export async function getDeveloperProfile() {
+  const res = await apiFetch('/developer/profile');
+  if (!res.ok) return null;
+  return res.json();
+}
+
+export async function getDeveloperDashboard() {
+  const res = await apiFetch('/developer/dashboard');
+  if (!res.ok) return null;
+  return res.json();
 }

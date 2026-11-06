@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, Sparkles, Sun, Moon, LogIn, LogOut, User } from 'lucide-react';
+import { Download, Sparkles, Sun, Moon, LogIn, LogOut, LayoutDashboard } from 'lucide-react';
 import { useApp } from '@/store/appStore';
 import { useTheme } from '@/hooks/useTheme';
 import { useAuth } from '@/store/authStore';
@@ -9,6 +9,7 @@ import { Dialog } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { DropdownMenu, DropdownItem, DropdownSeparator } from '@/components/ui/DropdownMenu';
+import { DeveloperDashboard } from '@/pages/developer/DeveloperDashboard';
 
 /**
  * Temporary Chat icon matching Image 2:
@@ -42,6 +43,7 @@ export function TopHeader() {
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [devDashOpen, setDevDashOpen] = useState(false);
 
   const isTemporary = state.isTemporaryChat;
   const user = authState.user;
@@ -130,10 +132,18 @@ export function TopHeader() {
               <p className="text-xs font-medium text-[var(--text-primary)] truncate">{user.displayName ?? 'Account'}</p>
               <p className="text-[10px] text-[var(--text-muted)] truncate">{user.email}</p>
             </div>
-            <DropdownItem icon={<User size={13} />} onClick={() => setUserMenuOpen(false)}>
-              Profile
-            </DropdownItem>
-            <DropdownSeparator />
+            {(user as { role?: string }).role === 'owner' && (
+              <>
+                <DropdownItem
+                  icon={<LayoutDashboard size={13} />}
+                  onClick={() => { setUserMenuOpen(false); setDevDashOpen(true); }}
+                  className="text-yellow-400 hover:text-yellow-300"
+                >
+                  Developer Dashboard
+                </DropdownItem>
+                <DropdownSeparator />
+              </>
+            )}
             <DropdownItem icon={<LogOut size={13} />} danger onClick={handleSignOut}>
               Sign out
             </DropdownItem>
@@ -262,6 +272,9 @@ export function TopHeader() {
       </Dialog>
       {/* Auth Modal */}
       {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+
+      {/* Developer Dashboard */}
+      {devDashOpen && <DeveloperDashboard onClose={() => setDevDashOpen(false)} />}
     </>
   );
 }

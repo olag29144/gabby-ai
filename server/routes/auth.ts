@@ -138,7 +138,7 @@ authRouter.get('/me', requireAuth, async (req: Request, res: Response) => {
   if (error || !data) {
     // Profile might not exist yet if schema hasn't been run — return basic info
     res.json({
-      user: { id: req.user!.id, email: req.user!.email, displayName: null },
+      user: { id: req.user!.id, email: req.user!.email, displayName: null, role: req.user!.role },
     });
     return;
   }
@@ -150,6 +150,7 @@ authRouter.get('/me', requireAuth, async (req: Request, res: Response) => {
       displayName: data.display_name,
       avatarUrl: data.avatar_url,
       createdAt: data.created_at,
+      role: req.user!.role,
     },
   });
 });

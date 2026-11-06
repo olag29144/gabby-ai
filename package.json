@@ -11,7 +11,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "migrate": "tsx supabase/migrate.ts"
+    "migrate": "tsx supabase/migrate.ts",
+    "migrate-v2": "node supabase/migrate-v2.mjs",
+    "setup-owner": "node supabase/setup-owner.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.0.1",
