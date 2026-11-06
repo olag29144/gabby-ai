@@ -44,12 +44,19 @@ export default function App() {
   }, [isCallback, checkAuth]);
 
   const handleAuthenticated = useCallback(async () => {
-    // Try to load the user after auth
     try {
       const user = await getMe();
-      setUser(user);
-    } catch { /* fine, proceed as guest */ }
-    setAppState('app');
+      if (user) {
+        setUser(user);
+        setAppState('app');
+      } else {
+        // getMe failed — still let them into app as guest (auth worked, profile fetch failed)
+        setAppState('app');
+      }
+    } catch {
+      // Network error on profile fetch — still proceed into app
+      setAppState('app');
+    }
   }, []);
 
   // If we land directly on /auth/callback, skip splash and process immediately
