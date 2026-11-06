@@ -1,4 +1,4 @@
-export const config = { runtime: 'edge' };
+export const runtime = 'edge';
 
 const GROQ_BASE       = 'https://api.groq.com/openai/v1';
 const OPENROUTER_BASE = 'https://openrouter.ai/api/v1';

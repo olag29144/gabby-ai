@@ -1,25 +1,23 @@
 {
   "version": 2,
-  "name": "gabby-ai",
   "buildCommand": "vite build",
   "outputDirectory": "dist/client",
   "installCommand": "npm install",
-  "framework": null,
   "rewrites": [
-    { "source": "/api/auth/signup",     "destination": "/api/auth/signup" },
-    { "source": "/api/auth/signin",     "destination": "/api/auth/signin" },
-    { "source": "/api/auth/signout",    "destination": "/api/auth/signout" },
-    { "source": "/api/auth/refresh",    "destination": "/api/auth/refresh" },
-    { "source": "/api/auth/me",         "destination": "/api/auth/me" },
-    { "source": "/api/chat",            "destination": "/api/chat" },
-    { "source": "/api/health",          "destination": "/api/health" },
-    { "source": "/api/memory",          "destination": "/api/memory/index" },
-    { "source": "/api/memory/:id",      "destination": "/api/memory/[id]" },
-    { "source": "/api/conversations",   "destination": "/api/conversations/index" },
-    { "source": "/api/conversations/:id", "destination": "/api/conversations/[id]" },
-    { "source": "/api/developer/profile",   "destination": "/api/developer/profile" },
-    { "source": "/api/developer/dashboard", "destination": "/api/developer/dashboard" },
-    { "source": "/(.*)",                "destination": "/index.html" }
+    { "source": "/api/auth/signup",           "destination": "/api/auth/signup" },
+    { "source": "/api/auth/signin",           "destination": "/api/auth/signin" },
+    { "source": "/api/auth/signout",          "destination": "/api/auth/signout" },
+    { "source": "/api/auth/refresh",          "destination": "/api/auth/refresh" },
+    { "source": "/api/auth/me",               "destination": "/api/auth/me" },
+    { "source": "/api/chat",                  "destination": "/api/chat" },
+    { "source": "/api/health",                "destination": "/api/health" },
+    { "source": "/api/memory",                "destination": "/api/memory/index" },
+    { "source": "/api/memory/:id",            "destination": "/api/memory/[id]" },
+    { "source": "/api/conversations",         "destination": "/api/conversations/index" },
+    { "source": "/api/conversations/:id",     "destination": "/api/conversations/[id]" },
+    { "source": "/api/developer/profile",     "destination": "/api/developer/profile" },
+    { "source": "/api/developer/dashboard",   "destination": "/api/developer/dashboard" },
+    { "source": "/(.*)",                      "destination": "/index.html" }
   ],
   "headers": [
     {
@@ -30,22 +28,5 @@
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" }
       ]
     }
-  ],
-  "functions": {
-    "api/chat.ts": {
-      "runtime": "edge"
-    },
-    "api/auth/*.ts": {
-      "maxDuration": 15
-    },
-    "api/memory/*.ts": {
-      "maxDuration": 15
-    },
-    "api/conversations/*.ts": {
-      "maxDuration": 15
-    },
-    "api/developer/*.ts": {
-      "maxDuration": 15
-    }
-  }
+  ]
 }
