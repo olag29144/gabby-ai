@@ -9,9 +9,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+    <script>
+      window.addEventListener('error', function(e) {
+        var root = document.getElementById('root');
+        if (!root) return;
+        root.innerHTML =
+          '<div style="height:100vh;display:flex;align-items:center;justify-content:center;background:#1e1f20;flex-direction:column;gap:12px;font-family:monospace;padding:2rem;text-align:center">' +
+          '<p style="color:#f87171;font-size:1rem;font-weight:600">Gabby AI startup error</p>' +
+          '<pre style="color:#fca5a5;font-size:0.75rem;max-width:640px;white-space:pre-wrap;background:#282a2c;padding:1rem;border-radius:8px;border:1px solid rgba(248,113,113,0.3)">' +
+          (e.message || 'Unknown error') + '\n\n' + (e.filename ? 'File: ' + e.filename + ':' + e.lineno : '') +
+          '</pre>' +
+          '<button onclick="location.reload()" style="padding:0.5rem 1.5rem;background:#4f8ef7;color:white;border:none;border-radius:999px;cursor:pointer;font-size:0.85rem;margin-top:8px">Reload</button>' +
+          '</div>';
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('[Gabby AI] Unhandled rejection:', e.reason);
+      });
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="height:100vh;display:flex;align-items:center;justify-content:center;background:#1e1f20;flex-direction:column;gap:12px">
+        <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
+          <defs>
+            <linearGradient id="gl" x1="3" y1="3" x2="29" y2="29" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#fbbf24"/>
+              <stop offset=".35" stop-color="#f43f5e"/>
+              <stop offset=".7" stop-color="#3b82f6"/>
+              <stop offset="1" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+          <path d="M16 2C16 9.732 22.268 16 30 16C22.268 16 16 22.268 16 30C16 22.268 9.732 16 2 16C9.732 16 16 9.732 16 2Z" fill="url(#gl)"/>
+        </svg>
+        <p style="color:#9aa0a6;font-size:14px;font-family:sans-serif">Loading Gabby AI...</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
